@@ -1,16 +1,16 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
-import { Airplanes } from '@interfaces/airplanes.interface';
+import { Airplane } from '@interfaces/airplanes.interface';
 
-export type AirplanesCreationAttributes = Optional<Airplanes, 'id' | 'factorial_serial_number' | 'air_company_id'>;
+export type AirplanesCreationAttributes = Optional<Airplane, 'id' | 'factorial_serial_number' | 'air_company_id'>;
 
-export class AirplanesModel extends Model<Airplanes, AirplanesCreationAttributes> implements Airplanes {
+export class AirplanesModel extends Model<Airplane, AirplanesCreationAttributes> implements Airplane {
   public id: number;
   public factorial_serial_number: number;
   public air_company_id: number;
   public number_of_flights: number;
   public flight_distance: number;
   public fuel_capacity: number;
-  public type: boolean;
+  public type: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

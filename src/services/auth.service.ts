@@ -1,4 +1,3 @@
-import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
 import DB from '@databases';
@@ -17,7 +16,7 @@ class AuthService {
     const findUser: User = await this.users.findOne({ where: { email: userData.email } });
     if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
-    const hashedPassword = await hash(userData.password, 10);
+    const hashedPassword = userData.password;
     const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
 
     return createUserData;
@@ -29,7 +28,7 @@ class AuthService {
     const findUser: User = await this.users.findOne({ where: { email: userData.email } });
     if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
 
-    const isPasswordMatching: boolean = await compare(userData.password, findUser.password);
+    const isPasswordMatching: boolean = false;
     if (!isPasswordMatching) throw new HttpException(409, "Password not matching");
 
     const tokenData = this.createToken(findUser);
