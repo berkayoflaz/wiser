@@ -53,7 +53,9 @@ class FlightsService {
         if (isEmpty(data.delay_started_at)) throw new HttpException(400, "delay started at is empty");
         update = await this.fligths.update({ flight_status : data.flight_status,delay_started_at:data.delay_started_at }, { where: { id: id } });
     }else{
-        update =  await this.fligths.update({ flight_status : data.flight_status }, { where: { id: id } }); 
+      if (isEmpty(data.ended_at)) throw new HttpException(400, "delay started at is empty");
+
+        update =  await this.fligths.update({ flight_status : data.flight_status, ended_at:data.ended_at }, { where: { id: id } }); 
     }
     
     return update;
